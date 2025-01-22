@@ -6,17 +6,13 @@ import { api } from "./_generated/api";
 
 const http = httpRouter();
 
-console.log("coming from clerk")
-
 http.route({
     path: "/clerk-webhook",
     method: "POST",
     
     handler: httpAction(async (ctx, request) => {
         const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
-        console.log("webhook secret loaded:" , !!webhookSecret)
         if (!webhookSecret) {
-            console.log("Missging the Clerk_Webhook_Secret")
             return new Response("Missing Clerk_WEBHOOK_SECRET environment variable", { status: 500 });
         }
       
@@ -77,7 +73,7 @@ http.route({
         };
 
         return new Response("Webhook processed successfully", { status: 200 });
-    }) 
+    }),
 });
 
 export default http;
