@@ -1,3 +1,4 @@
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import EditorPanel from "./_components/EditorPanel";
 import Header from "./_components/Header";
 import OutputPanel from "./_components/OutputPanel";

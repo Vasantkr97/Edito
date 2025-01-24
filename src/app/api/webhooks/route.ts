@@ -2,6 +2,8 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { PrismaClient } from '@prisma/client';
+import { createUser } from '@/src/db/user';
+import { create } from 'domain';
 
 const prisma = new PrismaClient();
 
@@ -58,14 +60,7 @@ export async function POST(req: Request) {
     const userName = `${first_name || ""} ${last_name || ""}`.trim();
     const createdAt = new Date(created_at);
     try {
-      const user = await prisma.user.create({
-        data: {
-          clerkId,
-          email,
-          userName,
-          createdAt,
-        }
-      });
+      const user = await createUser({clerkId,email,userName,createdAt})
       console.log(`User created: ${user.id}`)
     } catch (error) {
       console.log('Error saving user to database: ', error)

@@ -1,14 +1,38 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from './client'
 
-const prisma = new PrismaClient();
+type CreateUserInput = {
+    clerkId: string;
+    email: string;
+    userName: string;
+    createdAt: Date;
+}
 
-export const getUser = async (userId: string | null) {
-    if (!userId)  {
+export const createUser = async ({ clerkId, email, userName, createdAt } : CreateUserInput) => {
+    try {
+        const user = await prisma.user.create({
+            data: {
+                clerkId,
+                email,
+                userName,
+                createdAt,
+            }
+        })
+        return user;
+    } catch (err) {
+        console.log("Error creating user: ", err);
+        throw new Error("Failed to create user")
+    }
+    
+}
+
+
+export const getUser = async (clerkId: string | null) => {
+    if (!clerkId)  {
         return null
     }
     const user = await prisma.user.findUnique({
         where: {
-            id: userId
+            clerkId: clerkId
         }
     });
 
