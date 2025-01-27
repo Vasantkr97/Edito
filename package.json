@@ -10,15 +10,18 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.15",
+    "@monaco-editor/react": "^4.6.0",
     "@prisma/client": "^6.2.1",
     "@tailwindcss/postcss": "^4.0.0",
     "autoprefixer": "^10.4.20",
     "convex": "^1.18.2",
-    "lucide-react": "^0.473.0",
+    "framer-motion": "^12.0.5",
+    "lucide-react": "^0.474.0",
     "next": "15.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "svix": "^1.45.1"
+    "svix": "^1.45.1",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
