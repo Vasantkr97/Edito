@@ -1,7 +1,6 @@
 'use client'
 
 import { useCodeEditorStore } from "@/src/store/useCodeEditor";
-import { button } from "framer-motion/client";
 import { AlertTriangle, CheckCircle, Clock, Copy, Terminal } from "lucide-react";
 import { useState } from "react";
 import RunningCodeSkeleton from "./RunningCodeSkeleton";
@@ -17,7 +16,7 @@ const OutputPanel = () => {
     await navigator.clipboard.writeText(error || output);
     setISCopied(true);
 
-    setTimeout(() => setISCopied(false));
+    setTimeout(() => setISCopied(false), 2000);
   }
 
   return (
@@ -36,7 +35,7 @@ const OutputPanel = () => {
         {
         hasContent && (
           <button
-          onClick={handleCopy}
+            onClick={handleCopy}
             className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-gray-400 hover:text-gray-300 bg-[#1e1e2e] 
             rounded-lg ring-1 ring-gray-800/50 hover:ring-gray-700/50 transition-all"
           >
