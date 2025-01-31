@@ -1,15 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { saveExecution } from "@/src/db/codeExecution";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
    
     try {
-        const { language, code, output, error } = await req.body;
-        console.log("In Server",language);
-        console.log("In Server",code)
-        console.log("In Server",output);
-        console.log("In Server",error)
+        const { language, code, output, error } = await req.json();
         const result = await saveExecution({
             language,
             code,

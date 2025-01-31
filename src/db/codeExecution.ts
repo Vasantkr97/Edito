@@ -10,7 +10,6 @@ interface saveExecutionArgs {
 }
 
 export async function saveExecution( args: saveExecutionArgs) {
-    console.log("Inside the database file",args)
     try {
         const clerkUser = await currentUser();
         const user = clerkUser ? await getUser(clerkUser.id) : null;
