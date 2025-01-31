@@ -3,8 +3,8 @@
 import { getExecutionResult, useCodeEditorStore } from "@/src/store/useCodeEditor";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { output } from "framer-motion/client";
 import { Loader2, Play } from "lucide-react";
+
 
 
 const RunButton = () => {
@@ -14,14 +14,18 @@ const RunButton = () => {
   const handleRun = async () => {
     await runCode();
     const result = getExecutionResult();
-
+    console.log(language)
+    console.log(result?.code)
+    console.log(result?.output);
+    console.log(result?.error)
     if (user && result) {
       try {
-        const res = await fetch("/api/codeExecution/saveExecution", {
+        const res = await fetch("/api/saveExecution", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          
           body: JSON.stringify({
             language,
             code: result.code,
@@ -29,6 +33,16 @@ const RunButton = () => {
             error: result.error,
           })
         })
+
+        const responseData = await res.json();
+
+        if (res.ok) {
+          console.log("Execution saved successfully", responseData);
+        } else {
+          console.log("Error saving execution", responseData)
+        }
+      }  catch (error) {
+        console.log("error sending request", error)
       }
     } 
   }

@@ -10,7 +10,7 @@ interface saveExecutionArgs {
 }
 
 export async function saveExecution( args: saveExecutionArgs) {
-
+    console.log("Inside the database file",args)
     try {
         const clerkUser = await currentUser();
         const user = clerkUser ? await getUser(clerkUser.id) : null;
@@ -30,7 +30,7 @@ export async function saveExecution( args: saveExecutionArgs) {
         })
     } catch (error) {
         console.error("Error saving execution:", error);
-        throw new Error("Failed to save execution");
+        throw new Error("Failed to save executiooooooooon");
     }
 
 
