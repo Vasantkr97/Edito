@@ -19,7 +19,6 @@ export const createUser = async ({ clerkId, email, userName, createdAt } : Creat
         })
         return user;
     } catch (err) {
-        console.log("Error creating user: ", err);
         throw new Error("Failed to create user")
     }
     

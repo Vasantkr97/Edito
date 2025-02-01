@@ -14,10 +14,6 @@ const RunButton = () => {
   const handleRun = async () => {
     await runCode();
     const result = getExecutionResult();
-    console.log(language)
-    console.log(result?.code)
-    console.log(result?.output);
-    console.log(result?.error)
     if (user && result) {
       try {
         const res = await fetch("/api/saveExecution", {
@@ -35,12 +31,7 @@ const RunButton = () => {
         })
 
         const responseData = await res.json();
-
-        if (res.ok) {
-          console.log("Execution saved successfully", responseData);
-        } else {
-          console.log("Error saving execution", responseData)
-        }
+        
       }  catch (error) {
         console.log("error sending request", error)
       }

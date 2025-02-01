@@ -15,7 +15,7 @@ export async function saveExecution( args: saveExecutionArgs) {
         const user = clerkUser ? await getUser(clerkUser.id) : null;
 
         if (!user) {
-            throw new Error("User not authenticated");
+            throw new Error("User not Authenticated");
         }
 
         return await prisma.codeExecution.create({
@@ -28,8 +28,7 @@ export async function saveExecution( args: saveExecutionArgs) {
             },
         })
     } catch (error) {
-        console.error("Error saving execution:", error);
-        throw new Error("Failed to save executiooooooooon");
+        throw new Error("Failed to save execution");
     }
 
 

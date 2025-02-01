@@ -52,6 +52,7 @@ model Snippet {
   userName                  String
   comments                  SnippetComment[]
   stars                     Star[]
+  createdAt                 DateTime        @default(now())
 }
 
 model SnippetComment {
