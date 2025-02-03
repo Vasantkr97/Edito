@@ -1,11 +1,10 @@
 import { getSnippetById } from "@/src/db/snippet";
 import { NextResponse } from "next/server";
 
-export async function GET({ params } : { params: { id: string }}) {
-    console.log("Received params:", params);  // Log params to see if it's defined
-  console.log("Snippet ID:", params?.id);
+export async function GET(req:Request, { params } : { params: { id: string }}) {
+   
     try {
-        const snippetId = params?.id;
+        const { id: snippetId } = await params;
 
         if (!snippetId) {
             return NextResponse.json({ error: "Snippet Id is required"}, { status: 400});

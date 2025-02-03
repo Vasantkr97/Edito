@@ -56,8 +56,8 @@ export interface CodeEditorState {
 }
 
 export interface Snippet {
-  _id: Id<"snippets">;
-  _creationTime: number;
+  id: string;
+  createdAt: number;
   userId: string;
   language: string;
   code: string;

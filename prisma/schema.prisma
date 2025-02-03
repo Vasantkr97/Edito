@@ -25,7 +25,7 @@ model User {
   snippets                  Snippet[]
   stars                     Star[]
   codeExecutions            CodeExecution[]
-  SnippetComment            SnippetComment[]
+  Comments                  Comments[]
   createdAt                 DateTime       @default(now())
   updatedAt                 DateTime       @updatedAt
 }
@@ -50,17 +50,17 @@ model Snippet {
   language                  String
   code                      String
   userName                  String
-  comments                  SnippetComment[]
+  comments                  Comments[]
   stars                     Star[]
   createdAt                 DateTime        @default(now())
 }
 
-model SnippetComment {
+model Comments {
   id                        String          @id @default(cuid())
   snippetId                 String
   snippet                   Snippet         @relation(fields: [snippetId], references: [id])
-  userid                    String
-  user                      User            @relation(fields: [userid], references: [id])
+  userId                    String
+  user                      User            @relation(fields: [userId], references: [id])
   userName                  String
   content                   String
 }
@@ -71,4 +71,5 @@ model Star {
   user                     User             @relation(fields: [userId], references: [id])
   snippetId                String
   snippet                  Snippet          @relation(fields: [snippetId], references: [id])
+  @@unique([userId, snippetId]) //Ensure that each user can star or like the same snippet only once
 }

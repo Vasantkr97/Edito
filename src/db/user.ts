@@ -7,7 +7,7 @@ type CreateUserInput = {
     createdAt: Date;
 }
 
-export const createUser = async ({ clerkId, email, userName, createdAt } : CreateUserInput) => {
+export const createUser=  async ({ clerkId, email, userName, createdAt } : CreateUserInput) => {
     try {
         const user = await prisma.user.create({
             data: {

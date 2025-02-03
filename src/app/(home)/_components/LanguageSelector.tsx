@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { LANGUAGE_CONFIG } from '../_constants';
 import Image from 'next/image';
 import { ChevronDownIcon } from 'lucide-react';
-import { div } from 'framer-motion/client';
 import useMounted from '@/src/hooks/useMounted';
 
 const LanguageSelector = () => {
