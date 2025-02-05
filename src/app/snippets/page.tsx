@@ -11,11 +11,6 @@ import SnippetCard from "./_components/SnippetCard";
 
 const page = () => {
   const [snippets, setSnippets] = useState<Snippet[]>([]);
-  const [selectedSnippet, setSelectedSnippet] = useState<{ title: string | null; code: string | null }>({
-    title: null,
-    code: null
-  });
-  const [isStarred, setIsStarred] = useState<boolean | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [view, setView] = useState<"grid" | "list">("grid")
@@ -48,33 +43,18 @@ const page = () => {
         console.log("Error fetching the Snippets")
       }
     }
-    fetchSnippets();
+
+    // const interval = setInterval(fetchSnippets, 1000);
+    fetchSnippets()
+    // return () => clearInterval(interval)
   }, [])
 
-  const getSnippetById = async (id: string) => {
-    try {
-      const res = await fetch(`/api/getSnippetById/${id}`)
-      const data = await res.json();
-      setSelectedSnippet(data)
-    } catch {
-      console.log("error in retriveing snippet ")
-    }
-  }
-  
-  const getSnippetStar = async (id: string) => {
-    try {
-      const res = await fetch(`/api/isSnippetStarred/${id}`);
-      const data = await res.json();
-      setIsStarred(data.isStarred)
-    } catch (error) {
-      console.log("ERror checking snippet star status:", error)
-    }
-  }
 
   if (!snippets) {
     return (
       <div>
         <NavigationHeader /> 
+        Loading
       </div>
     )
   }

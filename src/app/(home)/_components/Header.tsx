@@ -58,7 +58,7 @@ async function Header() {
             <LanguageSelector  />
           </div>
 
-          {!postgresUser?.isPro && (
+          {/* {!postgresUser?.isPro && (
             <Link 
               href="/pricing"
               className='flex items-center gap-2 px-4 py-1.5 rounded-lg border border-amber-500/20 hover:border-amber-500/40 bg-gradient-to-r from-amber-500/10 
@@ -70,7 +70,7 @@ async function Header() {
                 Pro
               </span>
             </Link>
-          )}
+          )} */}
           <SignedIn>
             <RunButton />
           </SignedIn>

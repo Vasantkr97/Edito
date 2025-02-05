@@ -3,35 +3,47 @@ import { Snippet } from '@/src/types';
 import React, { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import Link from 'next/link';
-import { Clock, Trash2, User } from 'lucide-react';
+import { Clock, StarIcon, Trash2, User } from 'lucide-react';
 import Image from 'next/image';
-import { useUser } from '@clerk/nextjs';
 import { fetchUser } from '../../actions';
+import StarButton from '@/src/app/snippets/_components/StarButton';
 
 
 const SnippetCard = ({ snippet }: { snippet: Snippet}) => {
-    const [user, setUser] = useState()
+    const [userId, setUser] = useState<string>("")
     const [isDeleting, setIsDeleting] = useState(false);    
     const deleteSnippet = async (id: string) => {
-        await fetch(`/api/deleteSnippet/${id}`)
+      try {
+        const res = await fetch(`/api/deleteSnippet/${id}`, {
+          method: "DELETE",
+        })
+
+        if(!res.ok) {
+          throw new Error("Failed to delete snippet");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     useEffect(() => {
       const getUserId = async () => {
         const result = await fetchUser();
-        setUser(result)
+        setUser(result?.id ?? "")
       }
       getUserId()
     }, [])
 
     const handleDelete = async () => {
-
+      setIsDeleting(true) 
+      try {
+        await deleteSnippet(snippet.id)
+      } catch(error) {
+        console.error("Error deleting snippet:", error);
+      } finally {
+        setIsDeleting(false);
+      }
     };
-
-    console.log(user);
-    console.log(snippet.userId)
-    
-
 
   return (
     <motion.div
@@ -83,8 +95,8 @@ const SnippetCard = ({ snippet }: { snippet: Snippet}) => {
                 className="absolute top-5 right-5 z-10 flex gap-4 items-center"
                 onClick={(e) => e.preventDefault()}
               >
-                
-                {user === snippet.userId && (
+                <StarButton snippetId={snippet.id}  />
+                {userId === snippet.userId && (
                   <div className="z-10" onClick={(e) => e.preventDefault()}>
                     <button
                       onClick={handleDelete}

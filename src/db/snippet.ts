@@ -111,7 +111,7 @@ export const getSnippetById = async (snippetId: string) => {
 }
 
 
-export const snippetStared = async (snippetId: string,userId:string) => {
+export const snippetStarred = async (snippetId: string,userId:string) => {
     try {
         const star = await prisma.star.findFirst({
             where: {
@@ -160,8 +160,10 @@ export const starSnippet = async (snippetId: string) => {
                 }
             }
         })
+        console.log("existing Star",existingStar)
 
         if (existingStar) {
+            console.log("deleteing star")
             await prisma.star.delete({
                 where: {
                     userId_snippetId: {
@@ -170,6 +172,7 @@ export const starSnippet = async (snippetId: string) => {
                     }
                 }
             })
+            return { isStarred: false };
         } else {
             await prisma.star.create({
                 data: {
@@ -177,8 +180,26 @@ export const starSnippet = async (snippetId: string) => {
                     snippetId: snippetId,
                 }
             })
+            return { isStarred: true };
         }
     }catch (error) {
         throw new Error("Something went wrong in the snippetStar");
+    }
+}
+
+export const getComments = async (snippetId: string) => {
+    try {
+        const comment = await prisma.comments.findMany({
+            where: {
+                snippetId: snippetId,
+            },
+            orderBy: {
+                createdAt: 'desc',
+            }
+        })
+        return comment;
+    }catch (error) {
+        console.log("erro fetching Comment", error);
+        throw error;
     }
 }

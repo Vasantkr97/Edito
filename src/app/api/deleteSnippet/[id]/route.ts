@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(req: Request, { params }: { params: { id: string} }) {
     try {
-        const { id:snippetId } = params;
+        const snippetId = params?.id;
 
         if (!snippetId) {
             return NextResponse.json({ error: "Snippet Id is required"}, { status: 400 });

@@ -63,6 +63,7 @@ model Comments {
   user                      User            @relation(fields: [userId], references: [id])
   userName                  String
   content                   String
+  createdAt                 DateTime        @default(now())
 }
 
 model Star {
