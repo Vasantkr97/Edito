@@ -202,4 +202,57 @@ export const getComments = async (snippetId: string) => {
         console.log("erro fetching Comment", error);
         throw error;
     }
+};
+
+export const addComment = async (snippetId: string, content: string) => {
+    try {
+        const clerkUser = await currentUser();
+        const user = clerkUser ? await getUser(clerkUser.id) : null;
+
+        if (!user) throw new Error("Not Authenticated");
+
+        const comment = await prisma.comments.create({
+            data: {
+                snippetId,
+                userId: user.id,
+                userName: user.userName,
+                content
+            }
+        })
+
+        return comment
+    } catch (error) {
+        console.log("Error adding Comment", error);
+        throw new Error("Failed to add comment");
+    }
+}
+
+export const deleteComment = async (commentId: string) => {
+    try {
+        const clerkUser = await currentUser();
+        const user = clerkUser ? await getUser(clerkUser.id) : null;
+
+        if (!user) throw new Error("Not authenticated!");
+
+        const comment = await prisma.comments.findUnique({
+            where: { 
+                id: commentId
+            },
+        })
+
+        if (!comment) throw new Error("Comment not Found");
+
+        if (comment.userId !== user.id) {
+            throw new Error("Not authorized to delete this comment!");
+        }
+
+        await prisma.comments.delete({
+            where: {
+                id: commentId,
+            },
+        })
+    } catch (error) {
+        console.log("Error deleting comment:", error);
+        throw new Error("Failed to delete Comment");
+    }
 }
